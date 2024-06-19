@@ -1,3 +1,4 @@
+using Source.Code.ClockLogic;
 using UnityEngine;
 
 namespace Source.Code
@@ -7,6 +8,8 @@ namespace Source.Code
         private void Start()
         {
             Clock clock = new();
+            ClockPresenter clockPresenter = new(clock);
+            StartCoroutine(clockPresenter.GetTimeFromServer());
         }
     }
 }
