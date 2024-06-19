@@ -21,15 +21,21 @@ namespace Source.Code
             StartCoroutine(_clockPresenter.GetTimeFromServer());
         }
 
+        private void Update()
+        {
+            _clockPresenter.CalculateTime();
+
+            if (_clockPresenter.IsNeedGetServerTime)
+            {
+                StartCoroutine(_clockPresenter.UpdateServerTime());
+            }
+        }
+
         private void OnDestroy()
         {
             _button.onClick.RemoveListener(OnButtonClick);
         }
 
-        private void Update()
-        {
-            _clockPresenter.CalculateTime();
-        }
 
         private void OnButtonClick()
         {
