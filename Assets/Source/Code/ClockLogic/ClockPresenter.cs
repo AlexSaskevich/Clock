@@ -95,7 +95,11 @@ namespace Source.Code.ClockLogic
 
         private string GetServerTimeUri()
         {
+#if UNITY_EDITOR
             return "https://yandex.com/time/sync.json";
+#else
+            return "https://corsproxy.io/?https://yandex.com/time/sync.json";
+#endif
         }
     }
 }
