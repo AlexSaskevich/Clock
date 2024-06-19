@@ -3,6 +3,7 @@ using System.Collections;
 using Source.Code.ClockLogic.Views;
 using UnityEngine;
 using UnityEngine.Networking;
+using Random = UnityEngine.Random;
 
 namespace Source.Code.ClockLogic
 {
@@ -47,6 +48,18 @@ namespace Source.Code.ClockLogic
             {
                 clockView.SetTime(_currentTime);
             }
+        }
+
+        public void SetRandomTime()
+        {
+            DateTime currentTime = _clock.GetTime();
+            DateTime newTime = new(currentTime.Year, currentTime.Month, currentTime.Day,
+                Random.Range(0, 23), Random.Range(0, 59), Random.Range(0, 59));
+
+            _elapsedTime = 0;
+            _clock.SetTime(newTime);
+            _currentTime = _clock.GetTime();
+            Debug.LogWarning(_currentTime);
         }
     }
 }
