@@ -10,6 +10,8 @@ namespace Source.Code.ClockLogic
     {
         private readonly Clock _clock;
         private readonly IClockView[] _views;
+        private float _elapsedTime;
+        private DateTime _currentTime;
 
         public ClockPresenter(Clock clock, params IClockView[] views)
         {
@@ -33,6 +35,17 @@ namespace Source.Code.ClockLogic
             {
                 Debug.LogError("Error fetching time from server: " + webRequest.error);
                 _clock.SetTime(DateTime.Now);
+            }
+        }
+
+        public void CalculateTime()
+        {
+            _elapsedTime += Time.deltaTime;
+            _currentTime = _clock.GetTime().AddSeconds(_elapsedTime);
+
+            foreach (IClockView clockView in _views)
+            {
+                clockView.SetTime(_currentTime);
             }
         }
     }
